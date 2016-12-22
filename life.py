@@ -3,6 +3,7 @@
 # Goal: Make the game of life as pythonic as possible
 # @author: Stephen Greene
 
+
 import argparse
 import random
 import time
@@ -39,7 +40,6 @@ def turn(grid):
                 grid[x][y] = 1
             elif neighbors > 3:
                 grid[x][y] = 0
-
 
 
 if __name__ == "__main__":
