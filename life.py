@@ -1,4 +1,6 @@
 # Conways game of life in python
+# Work in progress for fun
+# Goal: Make the game of life as pythonic as possible
 # @author: Stephen Greene
 
 import argparse
