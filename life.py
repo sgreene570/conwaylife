@@ -36,7 +36,7 @@ def turn(grid):
                 for b in range(-1, 2):
                     if (x + a >= 0 and x + a < size and y + b >= 0 and
                         y + b < size and grid[x + a][y + b] == LIVE_CELL
-                        and (a != 0 and b!= 0)):
+                        and (a != 0 or b != 0)):
                         neighbors += 1
 
             if neighbors < 2:
