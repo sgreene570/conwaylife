@@ -15,15 +15,9 @@ def main():
     size = int(parser.parse_args().grid_size)
     grid = [[random.getrandbits(1) for x in range(size)]
         for y in range(size)]
-    b = tkinter.Button(root, text="Turn", command=turn(grid)).grid(row = size, column = size)
+    b = tkinter.Button(root, text="Turn", command=output_grid(grid = life.turn(grid))).grid(row = size, column = size)
     output_grid(grid)
     root.mainloop()
-
-
-def turn(grid):
-    grid = life.turn(grid)
-    output_grid(grid)
-    root.update()
 
 
 def output_grid(grid):
@@ -35,6 +29,7 @@ def output_grid(grid):
             elif(grid[r][c] == life.LIVE_CELL):
                 tkinter.Label(root, text="   ", bg='white', borderwidth = 1).grid(row = r, column = c)
 
+    root.update()
 
 
 if __name__ == "__main__":
