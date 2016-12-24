@@ -24,8 +24,10 @@ def main():
                 column=c)
 
         grid = life.turn(grid)
-        time.sleep(1)
         root.update()
+        time.sleep(.5)
+
+    root.mainloop()
 
 
 if __name__ == "__main__":
