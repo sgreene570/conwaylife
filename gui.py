@@ -7,9 +7,11 @@ import argparse
 import random
 import life
 import time
+import threading
 
 
 grid = None
+
 
 def main():
     global grid
@@ -26,9 +28,17 @@ def main():
 
 
 def update():
-    global grid
-    grid = life.turn(grid)
-    output_grid(grid)
+    def turn():
+        global grid
+        grid = life.turn(grid)
+    def output():
+        global grid
+        output_grid(grid)
+
+    t1 = threading.Thread(target=turn)
+    t1.start()
+    t2 = threading.Thread(target=output)
+    t2.start()
 
 
 def output_grid(grid):
@@ -39,8 +49,6 @@ def output_grid(grid):
                 tkinter.Label(root, text="   ", bg='black', borderwidth = 1).grid(row = r, column = c)
             elif(grid[r][c] == life.LIVE_CELL):
                 tkinter.Label(root, text="   ", bg='white', borderwidth = 1).grid(row = r, column = c)
-
-    root.update()
 
 
 if __name__ == "__main__":
