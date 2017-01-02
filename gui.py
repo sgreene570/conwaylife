@@ -28,17 +28,19 @@ def main():
 
 
 def update():
-    def turn():
-        global grid
-        grid = life.turn(grid)
-    def output():
-        global grid
-        output_grid(grid)
+    def callback():
+        def turn():
+            global grid
+            grid = life.turn(grid)
+        def output():
+            global grid
+            output_grid(grid)
+        t1 = threading.Thread(target=turn)
+        t1.start()
+        t2 = threading.Thread(target=output)
+        t2.start()
 
-    t1 = threading.Thread(target=turn)
-    t1.start()
-    t2 = threading.Thread(target=output)
-    t2.start()
+    root.after_idle(callback)
 
 
 def output_grid(grid):
