@@ -9,7 +9,10 @@ import life
 import time
 
 
+grid = None
+
 def main():
+    global grid
     parser = argparse.ArgumentParser(description="Conway's game of life")
     parser.add_argument('grid_size', type=int, help='side of square grid')
     size = int(parser.parse_args().grid_size)
@@ -17,9 +20,15 @@ def main():
         for y in range(size)]
     output_grid(grid)
     b = tkinter.Button(root, text="Turn",
-        command=output_grid(grid=life.turn(grid))).grid(row = size,
+        command=update).grid(row = size,
         column = size)
     root.mainloop()
+
+
+def update():
+    global grid
+    grid = life.turn(grid)
+    output_grid(grid)
 
 
 def output_grid(grid):
