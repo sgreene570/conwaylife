@@ -7,6 +7,8 @@
 import argparse
 import random
 import time
+from copy import copy, deepcopy
+import os
 
 
 DEAD_CELL = 0
@@ -20,33 +22,47 @@ def main():
     grid = [[random.getrandbits(1) for x in range(size)]
         for y in range(size)]
     while True:
-        turn(grid)
+        grid = turn(grid)
         for x in range(size):
-            print(grid[x])
+            for y in range(size):
+                if grid[x][y] == 1:
+                    print("#", end='')
+                else:
+                    print(" ", end='')
             print()
-        time.sleep(1)
+
+        time.sleep(.02)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def turn(grid):
+    # Deep copy to avoid pointer issues
+    new_grid = deepcopy(grid)
+    # Get frid size
     size = len(grid)
-    for x in range(size):
-        for y in range(size):
-            neighbors = 0;
-            for a in range(-1, 2):       #Iterate through surrounding cells
+    for x in range(0, size):
+        for y in range(0, size):
+            neighbors = 0
+            # Iterate over neighbors
+            for a in range(-1, 2):
                 for b in range(-1, 2):
-                    if (x + a >= 0 and x + a < size and y + b >= 0 and
-                        y + b < size and grid[x + a][y + b] == LIVE_CELL
-                        and (a != 0 or b != 0)):
+                    # Boundary and neighbor checking
+                    if ((x + a >= 0 and x + a < size) and (y + b >= 0 and
+                        y + b < size) and (not(a == 0 and  b == 0))
+                        and grid[x + a][y + b] == LIVE_CELL):
                         neighbors += 1
 
-            if neighbors < 2:
-                grid[x][y] = DEAD_CELL
-            elif neighbors == 3:
-                grid[x][y] = LIVE_CELL
-            elif neighbors > 3:
-                grid[x][y] = DEAD_CELL
+            # Rules of the game
+            if grid[x][y] == LIVE_CELL:
+                if neighbors < 2:
+                    new_grid[x][y] = DEAD_CELL
+                elif neighbors > 3:
+                    new_grid[x][y] = DEAD_CELL
+            elif grid[x][y] == DEAD_CELL and neighbors == 3:
+                new_grid[x][y] = LIVE_CELL
 
-    return grid
+    # Return the modified grid
+    return new_grid
 
 
 if __name__ == "__main__":
