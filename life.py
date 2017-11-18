@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Conways game of life in python
 # Work in progress for fun
 # Goal: Make the game of life as pythonic as possible
@@ -13,6 +14,7 @@ import os
 
 DEAD_CELL = 0
 LIVE_CELL = 1
+REFRESH_RATE = .2
 
 
 def main():
@@ -31,7 +33,7 @@ def main():
                     print(" ", end='')
             print()
 
-        time.sleep(.02)
+        time.sleep(REFRESH_RATE)
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
